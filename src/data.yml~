@@ -1,0 +1,37 @@
+%YAML:1.0
+overlap_tracking_th: 0.85
+translational_ratio_th: 0.15
+discretization: 100
+variance: 0.003
+tracking_th: 0.001
+ph_error_th: 0.001
+
+iter_th: 40
+local_maps_number:5
+local_maps_close_number: 1
+distortion: 1
+
+limit_grad: 0.80
+
+
+camera_path:"/mv_25000432/image_raw"
+cameraMatrix: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [624.63,0,372.58,0,624.53,246.89,0,0,1]
+distCoeffs: !!opencv-matrix
+   rows: 5
+   cols: 1
+   dt: d
+   data: [-0.429,0.188,2.299e-06,0.00051,0]
+
+
+calculate_superpixels: 0
+num_cameras_mapping_th: 9
+translational_ratio_th_min: 0.075
+limit_ratio_sing_val : 100
+limit_normalized_residual: 0.30
+matchings_active_search: 3
+
+
