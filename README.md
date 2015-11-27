@@ -5,6 +5,10 @@ Related Publication:
 
 [1] Alejo Concha, Javier Civera. DPPTAM: Dense Piecewise Planar Tracking and Mapping from a Monocular Sequence IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS15), Hamburg, Germany, 2015
 
+Video of the results that you should expect in the example sequences:
+
+https://www.youtube.com/watch?v=1R3DkwKrWiI
+
 #License
 
 DPPTAM is licensed under the GNU General Public License Version 3 (GPLv3), see http://www.gnu.org/licenses/gpl.html.
