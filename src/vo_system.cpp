@@ -48,13 +48,13 @@ vo_system::vo_system(){
 
 
     /// advertising 3D map and camera poses in rviz
-    pub_cloud = nh.advertise<sensor_msgs::PointCloud2> ("points2", 1);
+    pub_cloud = nh.advertise<sensor_msgs::PointCloud2> ("dpptam/map", 1);
     pub_poses = nh.advertise<sensor_msgs::PointCloud2> ("points_poses", 1);
-    vis_pub = nh.advertise<visualization_msgs::Marker>( "visualization_marker", 0 );
+    vis_pub = nh.advertise<visualization_msgs::Marker>( "dpptam/visualization_marker", 0 );
     /// advertising 3D map and camera poses in rviz
 
 
-    pub_image = it.advertise("camera/image",1);
+    pub_image = it.advertise("dpptam/camera/image",1);
 
     semidense_tracker.cont_frames = &cont_frames;
     semidense_tracker.stamps = &stamps;

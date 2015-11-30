@@ -535,7 +535,6 @@ void semidense_mapping(DenseMapping *dense_mapper,SemiDenseMapping *semidense_ma
 
                                                 float ratio_parallax = 1.5;
 
-                                                tic();
                                                 get_photometric_errors_matrix_sd_exhaustive(images,  semidense_mapper-> inv_depths, semidense_mapper->X,  semidense_mapper->X_gradient_Magnitude,\
                                                                                   semidense_mapper->X_gx_ex,semidense_mapper->X_gy_ey,reference_image,  semidense_mapper-> initial_inv_depth_sd, image_to_be_added,  \
                                                                                   semidense_mapper->point_limits_for_sd,semidense_mapper->points_ref_im_sd,discretization,window_size,  \
@@ -544,7 +543,6 @@ void semidense_mapping(DenseMapping *dense_mapper,SemiDenseMapping *semidense_ma
                                                                                   semidense_mapper-> t_r_ref,ratio_parallax, optimize_previous_frame,semidense_mapper-> previous_or_next_frame,\
                                                                                   semidense_mapper-> GX, semidense_mapper-> GY, semidense_mapper->num_cameras_mapping,
                                                                                   semidense_mapper-> max_inv_depth_initial_seed,semidense_mapper-> min_inv_depth_initial_seed);
-                                                toc();
 
                                                 if (optimize_previous_frame)
                                                 {semidense_mapper->frames_previous_keyframe_processed++;}
@@ -1274,7 +1272,7 @@ void semidense_mapping(DenseMapping *dense_mapper,SemiDenseMapping *semidense_ma
                         sensor_msgs::PointCloud2 out_points;
 
                         pcl::toROSMsg(map_pcl, out_points);
-                        out_points.header.frame_id = "map1";
+                        out_points.header.frame_id = "dpptam/map";
                         out_points.header.stamp = ros::Time::now();
                         pub_cloud->publish(out_points);
                     }

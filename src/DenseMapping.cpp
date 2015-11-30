@@ -401,7 +401,7 @@ void fullydense_mapping(DenseMapping *pdense_mapper,ros::Publisher *pub_cloud)
 
          sensor_msgs::PointCloud2 out_points;
          pcl::toROSMsg(map_pcl, out_points);
-         out_points.header.frame_id = "map1";
+         out_points.header.frame_id = "dpptam/map";
          out_points.header.stamp = ros::Time::now();
          pub_cloud->publish(out_points);
          // PUBLISH SUPERPIXELS

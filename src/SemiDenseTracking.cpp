@@ -836,7 +836,7 @@ void     publish_camera_frame(cv::Mat R,cv::Mat t,ros::Publisher *vis_pub)
 
     visualization_msgs::Marker marker;
 
-    marker.header.frame_id = "map1";
+    marker.header.frame_id = "dpptam/map";
    marker.id=4;
    marker.type = visualization_msgs::Marker::LINE_LIST;
    marker.scale.x=0.02;//0.2; 0.03
@@ -1019,7 +1019,7 @@ void optimize_camera(int num_keyframes,SemiDenseTracking *semidense_tracker,Semi
     tf::Vector3 V(twc.at<double>(0,0), twc.at<double>(1,0), twc.at<double>(2,0));
     tf::Transform tfTcw(M,V);
 
-    mTfBr.sendTransform(tf::StampedTransform(tfTcw,ros::Time::now(), "map1", "odom2"));
+    mTfBr.sendTransform(tf::StampedTransform(tfTcw,ros::Time::now(), "dpptam/map", "dpptam/visualization_marker"));
 
 
 
