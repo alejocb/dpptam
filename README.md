@@ -64,11 +64,18 @@ Launch dpptam:
 
 Launch the visualizer of the current frame
 
-    rosrun image_view image_view image:=/camera/image
+    rosrun image_view image_view image:=/dpptam/camera/image
 
 Launch the visualizer of the map
 
     rosrun rviz rviz
+    
+We are working on an automatic visualizer, but for now, check the following screenshot to set up the rviz visualizer:
+
+      https://www.dropbox.com/s/pymufqi2i2aixys/visualization_rviz.png?oref=e&n=314995776
+      
+
+      
 
 Visualization of the results using '.ply' files.
 
