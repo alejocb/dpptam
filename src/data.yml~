@@ -14,17 +14,18 @@ distortion: 1
 limit_grad: 0.80
 
 
-camera_path:"/mv_25000432/image_raw"
+camera_path:"/image_raw"
 cameraMatrix: !!opencv-matrix
    rows: 3
    cols: 3
    dt: d
-   data: [624.63,0,372.58,0,624.53,246.89,0,0,1]
+   data: [257.6436996459961, 0.0, 286.65277099609375, 0.0, 376.9067573547363, 240.2546844482422, 0.0, 0.0, 1.0]
 distCoeffs: !!opencv-matrix
    rows: 5
    cols: 1
    dt: d
-   data: [-0.429,0.188,2.299e-06,0.00051,0]
+   data: [0,0,0,0,0 ]
+
 
 
 calculate_superpixels: 1

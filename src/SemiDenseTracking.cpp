@@ -347,6 +347,7 @@ void semidense_tracking(Imagenes *images,SemiDenseMapping *semidense_mapper,\
                                semidense_tracker->points_projected_in_image);
                 }
 
+
                 initialization_sd(semidense_tracker,semidense_tracker->R,semidense_tracker->t,semidense_tracker->R_kf,\
                                   semidense_tracker->t_kf,semidense_tracker->image_prev,semidense_tracker->image_keyframe,\
                                   semidense_tracker->pyramid_levels, semidense_tracker->reduction_pyramid,\
@@ -373,17 +374,6 @@ void semidense_tracking(Imagenes *images,SemiDenseMapping *semidense_mapper,\
             {
                 cv::Mat depth_frame;
 
-                if (semidense_mapper->kinect_initialization>0.5)
-                {
-                    char buffer_depth_map[150];
-                    sprintf(buffer_depth_map,"src/dpptam/src/depth_maps_aux/%f.png", *semidense_tracker->stamps);
-
-                    cv::Mat dim = cv::imread(buffer_depth_map, CV_LOAD_IMAGE_UNCHANGED);
-
-                    dim.convertTo(dim,CV_32FC1);
-                    dim = dim / 4000;
-                    depth_frame  = dim.clone();
-                }
 
                 initialization(semidense_tracker->R,semidense_tracker->t,semidense_tracker->R_kf,semidense_tracker->t_kf,semidense_tracker->image_rgb,semidense_tracker->image_keyframe,semidense_tracker->pyramid_levels,semidense_tracker->reduction_pyramid,semidense_tracker->focalx,semidense_tracker->focaly,\
                              semidense_tracker->image_keyframe_pyramid,semidense_tracker->points_map,semidense_tracker->color,semidense_tracker->points3D,semidense_tracker->jacobian,semidense_tracker->error_vector,semidense_tracker->weight,semidense_tracker->fx,semidense_tracker->fy, semidense_tracker->depth,\
@@ -623,27 +613,12 @@ void initialization(cv::Mat &R,cv::Mat &t,cv::Mat &R1,cv::Mat &t1,cv::Mat &image
 
    double depth_aux = depth;
 
-   if (depth_frame.rows == 0){kinect_initialization = 0;}
-   if (kinect_initialization > 0.5)
-   {
-     cv::resize(depth_frame,depth_frame,cv::Size(depth_frame.cols/red_im,depth_frame.rows/red_im),0,0,cv::INTER_NEAREST);
-   }
 
    for (int j = 0; j < image_red.rows-0; j = j+1)
    {
    for (int i = 0; i < image_red.cols-0; i = i+1)
    {
-           if (kinect_initialization > 0.5)
-           {
-               if (abs(depth_frame.at<float>(j,i))>0)
-               {
-                   depth = 1/depth_frame.at<float>(j,i);
-               }
-               else
-               {
-                   depth = depth_aux/50;
-               }
-           }
+
 
            point_i.at<float>(0,1) =  -((c_y-j)/f_y)/(-depth);
            point_i.at<float>(0,0) =  -((i-c_x)/f_x)/(-depth);
@@ -654,11 +629,7 @@ void initialization(cv::Mat &R,cv::Mat &t,cv::Mat &R1,cv::Mat &t1,cv::Mat &image
            point_i.at<float>(0,5) =  image_gray.at<double>(j,i);
            points_i.push_back(point_i);
 
-           if (kinect_initialization > 0.5)
-           {
-               if (fabs(depth_frame.at<float>(j,i))>0)
-               {points_i_print.push_back(point_i);}
-           }
+
        }
    }
    points_i.convertTo(points_i,CV_64FC1);
@@ -2094,30 +2065,20 @@ void join_maps(vector<cv::Mat> &points_map,cv::Mat R,cv::Mat t,vector<cv::Mat> p
 
         float cont2 =0;
 
-        /*float umbral = 0;
-        if (i==0){
-            umbral = 3000;
-        }
-        if (i==1){
-            umbral = 8000;
-        }
+        float maximum_points_to_track = 0;
+
         if (i==pyramid_levels-1){
-            umbral = 30000;
+            maximum_points_to_track = 28000;
         }
         if (i==pyramid_levels-2){
-            umbral = 9000;
+            maximum_points_to_track = 8000;
         }
         if (i==pyramid_levels-3){
-            umbral = 4500;
-        }
-        if (i==pyramid_levels-4){
-            umbral = 1000;
-        }
-        if (i==pyramid_levels-5){
-            umbral = 500;
+            maximum_points_to_track = 2500;
         }
 
-        umbral *=1;*/
+
+        maximum_points_to_track *=1;
 
 
         cv::Mat points_joined(0,7,CV_64FC1);
@@ -2131,7 +2092,6 @@ void join_maps(vector<cv::Mat> &points_map,cv::Mat R,cv::Mat t,vector<cv::Mat> p
         points_map_aux.push_back(point_clouds[i]);
         point_clouds[i] = points_map_aux.clone();
 
-        float umbral = points_map_aux.rows;
 
 
 
@@ -2181,7 +2141,7 @@ void join_maps(vector<cv::Mat> &points_map,cv::Mat R,cv::Mat t,vector<cv::Mat> p
                                                     round(pointsClouds3Dmap_cam.at<double>(0,k))) < 1)
                 {
                     cont2++;
-                    check_repatead_points.at<double>(round(pointsClouds3Dmap_cam.at<double>(1,k)),round(pointsClouds3Dmap_cam.at<double>(0,k)))+=1;
+                    check_repatead_points.at<double>(round(pointsClouds3Dmap_cam.at<double>(1,k)),round(pointsClouds3Dmap_cam.at<double>(0,k))) += 1;
                 }
             }
         }
@@ -2190,7 +2150,8 @@ void join_maps(vector<cv::Mat> &points_map,cv::Mat R,cv::Mat t,vector<cv::Mat> p
 
 
 
-        //float limit = (umbral) / ( cont2);
+        float limit = (maximum_points_to_track) / ( cont2);
+        cont2 = 0;
 
         check_repatead_points = cv::Mat::zeros(imsize_y,imsize_x,CV_64FC1);
 
@@ -2203,21 +2164,34 @@ void join_maps(vector<cv::Mat> &points_map,cv::Mat R,cv::Mat t,vector<cv::Mat> p
                 if(check_repatead_points.at<double>(round(pointsClouds3Dmap_cam.at<double>(1,k)),
                                                     round(pointsClouds3Dmap_cam.at<double>(0,k))) < 1)
                 {
+
                         points_joined_previous_map.push_back(point_clouds[i].row(k));
                         check_repatead_points.at<double>(round(pointsClouds3Dmap_cam.at<double>(1,k)),round(pointsClouds3Dmap_cam.at<double>(0,k)))+=1;
 
 
+                        cont2++;
                         if (pointsClouds3Dmap_cam.at<double>(1,k) > 0-border && pointsClouds3Dmap_cam.at<double>(1,k) < imsize_y+border && \
                                 pointsClouds3Dmap_cam.at<double>(0,k) > 0-border &&pointsClouds3Dmap_cam.at<double>(0,k) < imsize_x+border \
                                 && i==pyramid_levels-1)
                         {
                             points_projected_in_image++;
                         }
-                   // }
+
 
                 }
             }
         }
+        limit = (maximum_points_to_track) / ( cont2);
+        cv::Mat points_joined_previous_map_aux(0,7,CV_64FC1);
+        for(int k = 0; k < points_joined_previous_map.rows;k++)
+        {
+             if  (((rand() % 1000000 ) / 1000000.0) < limit)
+             {
+                 points_joined_previous_map_aux.push_back(points_joined_previous_map.row(k));
+             }
+        }
+        points_joined_previous_map = points_joined_previous_map_aux.clone();
+
 
         points_joined.push_back(points_joined_previous_map); points_map[i] = points_joined.clone();
 

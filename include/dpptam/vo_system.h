@@ -69,8 +69,7 @@ public:
     ros::Time current_time,stamps_ros;
 
     ros::NodeHandle nh;
-    ros::Subscriber sub6;
-    image_transport::Subscriber sub1,sub2,sub3,sub4;
+    image_transport::Subscriber sub1;
     image_transport::Publisher pub_image;
 
     ros::Publisher odom_pub;

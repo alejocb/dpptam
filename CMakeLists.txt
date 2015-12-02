@@ -66,8 +66,8 @@ link_directories(${PCL_LIBRARY_DIRS})
 ###########
 ## Build ##
 ###########
-add_executable(main ${DENSE_HEADER_FILES} ${DENSE_SOURCE_FILES})
-target_link_libraries(main ${OpenCV_LIBS} ${catkin_LIBRARIES})
+add_executable(dpptam ${DENSE_HEADER_FILES} ${DENSE_SOURCE_FILES})
+target_link_libraries(dpptam ${OpenCV_LIBS} ${catkin_LIBRARIES})
 
 
  install(PROGRAMS
