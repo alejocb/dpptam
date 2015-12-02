@@ -43,7 +43,7 @@ PCL
 
 #Installation
 
-    git clone  https://github.com/alejocb/dpptam.git
+     git clone  https://github.com/alejocb/dpptam.git
     
 #Compilation
 
@@ -59,7 +59,8 @@ Code used -> Efficient Graph-Based Image Segmentation. P. Felzenszwalb, D. Hutte
 #Usage
 
 Launch dpptam:
-
+     
+    cd catkin_ws 
     rosrun dpptam main
 
 Launch the visualizer of the current frame
