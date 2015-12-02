@@ -53,15 +53,19 @@ SUPERPIXELS COMPILATION
 
 Code used -> Efficient Graph-Based Image Segmentation. P. Felzenszwalb, D. Huttenlocher. International Journal of Computer Vision, Vol. 59, No. 2, September 2004
 
-    cd src/dpptam/src/images
+    cd root/catkin_workspace/src/dpptam/src/images
     make
 
 #Usage
 
 Launch dpptam from your 'catkin_workspace' folder:
      
-    cd catkin_workspace 
+    cd root/catkin_workspace 
     rosrun dpptam main
+    
+Notice that the location of dpptam should be the following:
+
+    root/catkin_workspace/src/dpptam
 
 Launch the visualizer of the current frame
 
@@ -73,7 +77,7 @@ Launch the visualizer of the map
     
 We are working on an automatic visualizer, but for now, check the following screenshot to set up the rviz visualizer:
 
-      https://www.dropbox.com/s/pymufqi2i2aixys/visualization_rviz.png?oref=e&n=314995776
+    https://www.dropbox.com/s/pymufqi2i2aixys/visualization_rviz.png?oref=e&n=314995776
       
 
       
@@ -169,3 +173,11 @@ limit_normalized_residual: [double]. This threshold accounts for the minimum err
 6-) Minimum number of matches of 3D superpixels in multiple views to achieve multiview consistency.
 
 matchings_active_search: [int]. Number of matches required of the 3D superpixel in multiple views. Larger values -> less outliers. Default: 3. Typical values [0-4].
+
+# Contact
+
+If you have any issue compiling/running dpptam or you would like to know anything about the code, please contact the authors:
+
+     Alejo Concha -> aconchabelenguer@gmail.com
+
+     Javier Civera -> jcivera@unizar.es
