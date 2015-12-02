@@ -58,9 +58,9 @@ Code used -> Efficient Graph-Based Image Segmentation. P. Felzenszwalb, D. Hutte
 
 #Usage
 
-Launch dpptam:
+Launch dpptam from your 'catkin_workspace' folder:
      
-    cd catkin_ws 
+    cd catkin_workspace 
     rosrun dpptam main
 
 Launch the visualizer of the current frame
