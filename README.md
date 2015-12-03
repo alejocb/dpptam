@@ -61,7 +61,7 @@ Code used -> Efficient Graph-Based Image Segmentation. P. Felzenszwalb, D. Hutte
 Launch dpptam from your 'catkin_workspace' folder:
      
     cd root/catkin_workspace 
-    rosrun dpptam main
+    rosrun dpptam dpptam
     
 Notice that the location of dpptam should be the following:
 
