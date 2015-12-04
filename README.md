@@ -37,11 +37,11 @@ To install ROS (indigo) use the following command:
 
      sudo apt-get install ros-indigo-desktop
 
-PCL
+PCL library for visualization
 
      sudo apt-get install ros-indigo-pcl-ros
      
-BOOST 
+BOOST library to launch the different threads.
     
      sudo apt-get install libboost-all-dev 
 
