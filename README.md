@@ -40,6 +40,10 @@ To install ROS (indigo) use the following command:
 PCL
 
      sudo apt-get install ros-indigo-pcl-ros
+     
+BOOST 
+    
+     sudo apt-get install libboost-all-dev 
 
 #Installation
 
