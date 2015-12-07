@@ -68,14 +68,15 @@ vo_system::vo_system(){
     boost::thread thread_semidense_mapper(&ThreadSemiDenseMapper,&images,&images_previous_keyframe,&semidense_mapper,&semidense_tracker,&dense_mapper,&Map,&pub_cloud);
 
 
-    cout << "***    DPPTAM is working     *** " <<  endl << endl;
-    cout << "***    Launch the example sequences or use your own sequence / live camera and update the file 'data.yml' with the corresponding camera_path and calibration parameters    ***"  << endl;
-
     if (calculate_superpixels > 0.5)
     {
         ///launch dense mapper thread
          boost::thread thread_dense_mapper(&ThreadDenseMapper,&dense_mapper,&pub_cloud);
     }
+    
+    cout << "***    DPPTAM is working     *** " <<  endl << endl;
+    cout << "***    Launch the example sequences or use your own sequence / live camera and update the file 'data.yml' with the corresponding camera_path and calibration parameters    ***"  << endl;
+
 }
 
 
