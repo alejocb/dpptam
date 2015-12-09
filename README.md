@@ -11,9 +11,9 @@ https://www.youtube.com/watch?v=1R3DkwKrWiI
 
 #License
 
-DPPTAM is licensed under the GNU General Public License Version 3 (GPLv3), see http://www.gnu.org/licenses/gpl.html.
+DPPTAM is licensed under the GNU General Public License Version 3 (GPLv3), please see http://www.gnu.org/licenses/gpl.html.
 
-For commercial purposes, contact the authors.
+For commercial purposes, please contact the authors.
 
 If you use DPPTAM in an academic work, please cite:
 
