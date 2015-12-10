@@ -37,7 +37,7 @@ To install ROS (indigo) use the following command:
 
      sudo apt-get install ros-indigo-desktop
      
-Or follow the following link:
+Or check the following link if you have any issue:
 
     http://wiki.ros.org/indigo/Installation/Ubuntu
      
