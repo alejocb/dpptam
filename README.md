@@ -29,19 +29,24 @@ This site and the code provided here are under active development. Even though w
 
 #Dependencies
 
-ROS
+ROS:
 
 We have tested DPPTAM in Ubuntu 14.04 with ROS Indigo.
 
 To install ROS (indigo) use the following command:
 
      sudo apt-get install ros-indigo-desktop
+     
+Or follow the following link:
 
-PCL library for visualization
+    http://wiki.ros.org/indigo/Installation/Ubuntu
+     
+
+PCL library for visualization:
 
      sudo apt-get install ros-indigo-pcl-ros
      
-BOOST library to launch the different threads.
+BOOST library to launch the different threads:
     
      sudo apt-get install libboost-all-dev 
 
