@@ -416,8 +416,9 @@ void semidense_tracking(Imagenes *images,SemiDenseMapping *semidense_mapper,\
              semidense_tracker->t_post = semidense_tracker->t.clone();
 
 
-             if (semidense_tracker->points_projected_in_image < 5){semidense_tracker->points_projected_in_image = semidense_tracker->points_map[2].rows;}
-             semidense_mapper->overlap_tracking = 1.0*semidense_tracker->points_map_inImage[2].rows / semidense_tracker->points_map[2].rows;
+             if (semidense_tracker->points_projected_in_image < 5){semidense_tracker->points_projected_in_image = semidense_tracker->points_map[semidense_tracker->pyramid_levels-1].rows;}
+             semidense_mapper->overlap_tracking = 1.0*semidense_tracker->points_map_inImage[semidense_tracker->pyramid_levels-1].rows / semidense_tracker->points_map[semidense_tracker->pyramid_levels-1].rows;
+
 
              if (semidense_tracker->image_n % 2 == 0)
              {
