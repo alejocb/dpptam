@@ -22,6 +22,7 @@
 #include <fstream>
 #include <iomanip>    // Needed for stream modifiers fixed and set precision
 
+#include <ros/package.h>
 
 
 vo_system::vo_system(){
@@ -29,7 +30,7 @@ vo_system::vo_system(){
 
     ///vo_system launch the three threads, tracking, semidense mapping and dense mapping (3D superpixels)
 
-    cv::FileStorage  fs2("src/dpptam/src/data.yml", cv::FileStorage::READ);
+    cv::FileStorage  fs2( (ros::package::getPath("dpptam")+"/src/data.yml").c_str(), cv::FileStorage::READ);
 
     std::string camera_path;
     fs2["camera_path"] >> camera_path;
@@ -54,7 +55,10 @@ vo_system::vo_system(){
     /// advertising 3D map and camera poses in rviz
 
 
+    /// pubishing current frame and the reprojection of the 3D map
     pub_image = it.advertise("dpptam/camera/image",1);
+    /// pubishing current frame and the reprojection of the 3D map
+
 
     semidense_tracker.cont_frames = &cont_frames;
     semidense_tracker.stamps = &stamps;

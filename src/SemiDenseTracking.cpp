@@ -23,21 +23,18 @@
 #include <Eigen/Dense>
 #include <opencv2/core/eigen.hpp>
 #include <ros/ros.h>
+#include <ros/package.h>
+
 #include <image_transport/image_transport.h>
 
 
 SemiDenseTracking::SemiDenseTracking()
 {
 
-    /*char cwd[1024];
-       if (getcwd(cwd, sizeof(cwd)) != NULL)
-           fprintf(stdout, "Current working dir: %s\n", cwd);
-       else
-           perror("getcwd() error");
-       chdir(cwd);*/
-       //chdir("/home/alejo/catkin_ws");
 
-   cv::FileStorage  fs2("src/dpptam/src/data.yml", cv::FileStorage::READ);
+
+
+   cv::FileStorage  fs2( (ros::package::getPath("dpptam")+"/src/data.yml").c_str(), cv::FileStorage::READ);
    fs2["cameraMatrix"] >> cameraMatrix;
    fs2["distCoeffs"] >> distCoeffs;
 
@@ -99,12 +96,12 @@ SemiDenseTracking::SemiDenseTracking()
    create_inv_depth_discretization = 0;
 
 
-   boost::filesystem::remove_all("src/dpptam/src/map_and_poses");
-   boost::filesystem::create_directory("src/dpptam/src/map_and_poses");
-   boost::filesystem::remove_all("src/dpptam/src/evaluation");
-   boost::filesystem::create_directory("src/dpptam/src/evaluation");
-   boost::filesystem::remove_all("src/dpptam/src/results_depth_maps");
-   boost::filesystem::create_directory("src/dpptam/src/results_depth_maps");
+   boost::filesystem::remove_all((ros::package::getPath("dpptam")+"/src/map_and_poses").c_str());
+   boost::filesystem::create_directory((ros::package::getPath("dpptam")+"/src/map_and_poses").c_str());
+   boost::filesystem::remove_all((ros::package::getPath("dpptam")+"/src/evaluation").c_str());
+   boost::filesystem::create_directory((ros::package::getPath("dpptam")+"/src/evaluation").c_str());
+   boost::filesystem::remove_all((ros::package::getPath("dpptam")+"/src/results_depth_maps").c_str());
+   boost::filesystem::create_directory((ros::package::getPath("dpptam")+"/src/results_depth_maps").c_str());
 
    R = (cv::Mat_<double>(3, 3) <<  1,0,0,0,1,0,0,0,1);
    t = (cv::Mat_<double>(3, 1) << 0,0,0);
@@ -406,7 +403,7 @@ void semidense_tracking(Imagenes *images,SemiDenseMapping *semidense_mapper,\
 
               semidense_tracker->frames_processed++;
               if (images->getNumberOfImages() == 1)
-              {cout << "frames_processed - >" <<100.0 * semidense_tracker->frames_processed / *semidense_tracker->cont_frames << " %" << endl;}
+              {cout << "frames_processed -> " <<100.0 * semidense_tracker->frames_processed / *semidense_tracker->cont_frames << " %" << endl;}
 
 
              Map->set_R(semidense_tracker->R);
@@ -475,12 +472,14 @@ void semidense_tracking(Imagenes *images,SemiDenseMapping *semidense_mapper,\
                  semidense_tracker->set_evaluation(evaluation_frame);
              }
 
-             if ( semidense_mapper->num_keyframes %2==0)
+             /*if ( semidense_mapper->num_keyframes %2==0)
              {
                  char buffer_evaluation[150];
-                 sprintf(buffer_evaluation,"src/dpptam/src/evaluation/evaluation%d.txt",semidense_mapper->num_keyframes);
+                 //ros::package::getPath("dpptam")+"/src/results_depth_maps").c_str()
+                // sprintf(buffer_evaluation,"src/dpptam/src/evaluation/evaluation%d.txt",semidense_mapper->num_keyframes);
+                 sprintf (buffer_evaluation,(ros::package::getPath("dpptam")+"/src/evaluation/evaluation%d.txt").c_str(),semidense_mapper->num_keyframes);
                  print_evaluation(semidense_tracker->evaluation,buffer_evaluation);
-             }
+             }*/
 
              if (semidense_tracker->create_inv_depth_discretization < 0.5)
              {
@@ -1001,9 +1000,11 @@ void optimize_camera(int num_keyframes,SemiDenseTracking *semidense_tracker,Semi
 
    char buffer[150];
 
-    if (semidense_tracker->image_n % 5 == 0)
-    {sprintf(buffer,"src/dpptam/src/map_and_poses/tracking.ply");
-    print_poses(semidense_tracker->poses,buffer);}
+    if (images.getNumberOfImages() < 2)
+    {
+        sprintf (buffer,(ros::package::getPath("dpptam")+"/src/map_and_poses/tracking.ply").c_str());
+        print_poses(semidense_tracker->poses,buffer);
+    }
 
 
 

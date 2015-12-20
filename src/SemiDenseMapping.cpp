@@ -20,6 +20,8 @@
 
 #include <dpptam/SemiDenseMapping.h>
 #include <dpptam/vo_system.h>
+#include <ros/package.h>
+
 
 #define U_SEGS(a)\
          gettimeofday(&tv,0);\
@@ -39,7 +41,7 @@ SemiDenseMapping::SemiDenseMapping():do_initialization(1),do_optimization(0), do
     num_cameras_mapping(0), num_keyframes(0), do_init_semi(1), images_size(0), overlap_tracking(1),
     frames_previous_keyframe_processed(0),frames_previous_keyframe_used(0),convergence(1),convergence_total(0)
 {
-    cv::FileStorage  fs2("src/dpptam/src/data.yml", cv::FileStorage::READ);
+    cv::FileStorage  fs2( (ros::package::getPath("dpptam")+"/src/data.yml").c_str(), cv::FileStorage::READ);
 
 
     int pyramid_levels = 3;
@@ -1163,7 +1165,7 @@ void semidense_mapping(DenseMapping *dense_mapper,SemiDenseMapping *semidense_ma
                         cv::resize(depth_channel_show1,depth_channel_show1,cv::Size(round(depth_channel_show1.cols*2),round(depth_channel_show1.rows*2)),0,0,cv::INTER_LINEAR);
 
                         char write_depth_map[150];
-                        sprintf (write_depth_map,"src/dpptam/src/results_depth_maps/depth_keyframe%d_xFiltered.png",num_keyframes);
+                        sprintf (write_depth_map,(ros::package::getPath("dpptam")+"/src/results_depth_maps/depth_keyframe%d_xFiltered.png").c_str(),num_keyframes);
                         cv::imwrite(write_depth_map,depth_channel_show);
                     }
 
@@ -1232,7 +1234,7 @@ void semidense_mapping(DenseMapping *dense_mapper,SemiDenseMapping *semidense_ma
                    if (num_keyframes %1 == 0 && num_keyframes >  semidense_mapper -> init_keyframes +1)
                    {
                         char buffer[150];
-                        sprintf (buffer,"src/dpptam/src/map_and_poses/MAP%d.ply",num_keyframes);
+                        sprintf (buffer,(ros::package::getPath("dpptam")+"/src/map_and_poses/MAP%d.ply").c_str(),num_keyframes);
                         points_aux2_print.convertTo(points_aux2_print,CV_64FC1);
 
                         print_plane( points_aux2_print,buffer);
