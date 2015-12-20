@@ -58,11 +58,11 @@ BOOST library to launch the different threads:
 
      catkin_make --pkg dpptam
 
-SUPERPIXELS COMPILATION
+Third Party: SUPERPIXELS COMPILATION
 
 Code used -> Efficient Graph-Based Image Segmentation. P. Felzenszwalb, D. Huttenlocher. International Journal of Computer Vision, Vol. 59, No. 2, September 2004
 
-    cd root/catkin_workspace/src/dpptam/src/images
+    cd root/catkin_workspace/src/dpptam/ThirdParty/segment
     make
 
 #Usage
