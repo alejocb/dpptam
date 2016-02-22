@@ -292,7 +292,7 @@ void semidense_mapping(DenseMapping *dense_mapper,SemiDenseMapping *semidense_ma
 
                         for (int i = 0;i<points3D_tracked.rows;i++)
                         {
-                            if ( semidense_mapper->weight_tracked_points.at<float>(i,0)<0.06)
+                            if ( semidense_mapper->weight_tracked_points.at<double>(i,0)<0.06)
                             {
                                 points_aux.push_back(points3D_tracked.row(i));
                             }
