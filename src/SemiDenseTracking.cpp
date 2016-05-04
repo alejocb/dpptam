@@ -1272,56 +1272,15 @@ void resize_points(cv::Mat  &points2,cv::Mat  &points, double reduction,cv::Mat 
     cv::sort(sorted_gradients,sorted_gradients,CV_SORT_EVERY_COLUMN + CV_SORT_ASCENDING);
 
 
-    float limit ;
-
-
-    limit = limit_grad;
-
-
-
-    cv::Mat G_expanded = G.clone()+1;
-    for (int i=5; i<G.rows-5; i++)
-    {
-        for (int j=5; j < G.cols-5;j++)
-        {
-            /*for (int ii=i-1; ii<=i+1; ii++)
-            {
-                for (int jj=j-1; jj<=j+1; jj++)
-                {*/
-                    if (G.at<float>(i,j) < limit)
-                    {
-                       G_expanded.at<float>(i,j) =   limit-0.1;
-                    }
-                /*}
-            }*/
-        }
-    }
-    G = G_expanded.clone();
-    //cin >> limit;
-
-
-    cv::Mat sorted_depths, points_z2;
-    points_z2 = points_z.clone();
-    points_z2=points_z2.reshape(0, points_z.rows* points_z.cols);
-
-    cv::sort(cv::abs(points_z2),sorted_depths,CV_SORT_EVERY_COLUMN + CV_SORT_ASCENDING);
-    double variance = sorted_depths.at<double>(round(sorted_depths.rows/2),0);
-
+    float limit = limit_grad;
 
     cv::Mat B;
-    if (kinect_initialization > 0.5)
-    { B = ((G < limit & cv::abs(points_z) < 40));}
-    else
-    { B = (G < limit & cv::abs(points_z) < 100* variance * 1.25);}
-
-
+    B = (G < limit);
 
     B = B.reshape(0,points_x.cols*points_x.rows);
 
     points_x =  points_x.reshape(0,points_x.cols*points_x.rows);
-
     points_y =  points_y.reshape(0,points_y.cols*points_y.rows);
-
     points_z =  points_z.reshape(0,points_z.cols*points_z.rows);
     points_R =  points_R.reshape(0,points_R.cols*points_R.rows);
     points_G =  points_G.reshape(0,points_G.cols*points_G.rows);
@@ -1334,10 +1293,9 @@ void resize_points(cv::Mat  &points2,cv::Mat  &points, double reduction,cv::Mat 
     cv::Mat points_g1(1,0,CV_64FC1);
     cv::Mat points_b1(1,0,CV_64FC1);
 
-    B.convertTo(B,CV_32FC1);
     for (int i = 0; i < points_x.rows; i++)
     {
-        if (B.at<float>(i,0)>100)
+    	if (B.at<bool>(i,0) == true)
            {
             points_x1.push_back(points_x.at<double>(i,0));
             points_y1.push_back(points_y.at<double>(i,0));
