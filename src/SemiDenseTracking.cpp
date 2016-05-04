@@ -1636,14 +1636,14 @@ R1 = U*V;
 R2 = R.clone();
 t2 = t.clone();
 
-t2 = -R2.t()*t2;
-R2 = R2.t();
+// Update the pose: T_nw <-- T_nw*inv(T_kw)*inv(T_inc)*T_kw
+//
+//               where	R2 & t2 correspond to T_nw
+//                      R_p & t_p correspond to T_kw
+//                      R1 & T1 correspond to T_inc
 
-t2 = R2*t1 + t2;
-R2 = R2*R1;
-
-t2 = -R2.t()*t2;
-R2 = R2.t();
+t2 = R2*R_p.t()*(R1.t()*(t_p-t1)-t_p)+t2;
+R2 = R2*R_p.t()*R1.t()*R_p;
 
 
 
