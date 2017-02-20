@@ -86,8 +86,7 @@ Launch the visualizer of the map
     
 We are working on an automatic visualizer, but for now, check the following screenshot to set up the rviz visualizer:
 
-    https://www.dropbox.com/s/pymufqi2i2aixys/visualization_rviz.png?oref=e&n=314995776
-      
+    http://imgur.com/OA8i3Dj      
 
       
 
